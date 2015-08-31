@@ -23,7 +23,6 @@ import (
 	"github.com/aws/amazon-ecs-agent/agent/engine/emptyvolume"
 	"github.com/aws/amazon-ecs-agent/agent/utils/ttime"
 	"github.com/aws/aws-sdk-go/internal/protocol/json/jsonutil"
-	"github.com/fsouza/go-dockerclient"
 )
 
 const emptyHostVolumeName = "~internal~ecs-emptyvolume-source"
@@ -294,11 +293,25 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 		return nil, &HostConfigError{err.Error()}
 	}
 
+	logDriver := config.EngineLogDriver
+	logOpts := make(map[string]string)
+	keypair := make(string)
+	for _, kv := range strings.Fields(config.EngineLogOpts) {
+		keypair = strings.Split(kv, "=")
+		logOpts[keypair[0]] = keypair[1]
+	}
+
+	logConfig := &LogConfig{
+		Type:   logDriver,
+		Config: logOpts,
+	}
+
 	hostConfig := &docker.HostConfig{
 		Links:        dockerLinkArr,
 		Binds:        binds,
 		PortBindings: dockerPortMap,
 		VolumesFrom:  volumesFrom,
+		LogConfig:    logConfig,
 	}
 	return hostConfig, nil
 }

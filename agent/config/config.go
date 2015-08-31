@@ -190,6 +190,9 @@ func EnvironmentConfig() Config {
 	dockerEndpoint := os.Getenv("DOCKER_HOST")
 	engineAuthType := os.Getenv("ECS_ENGINE_AUTH_TYPE")
 	engineAuthData := os.Getenv("ECS_ENGINE_AUTH_DATA")
+	// mgresko: adding variables to configure logging drivers
+	engineLogDriver := os.Getenv("DOCKER_LOG_DRIVER")
+	engineLogOpts := os.Getenv("DOCKER_LOG_OPTS")
 
 	var checkpoint bool
 	dataDir := os.Getenv("ECS_DATADIR")
@@ -262,6 +265,8 @@ func EnvironmentConfig() Config {
 		DisableMetrics:    disableMetrics,
 		DockerGraphPath:   dockerGraphPath,
 		ReservedMemory:    reservedMemory,
+		EngineLogDriver:   engineLogDriver,
+		EngineLogOpts:     engineLogOpts,
 	}
 }
 
