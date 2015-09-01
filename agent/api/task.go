@@ -22,6 +22,7 @@ import (
 	"github.com/aws/amazon-ecs-agent/agent/acs/model/ecsacs"
 	"github.com/aws/amazon-ecs-agent/agent/engine/emptyvolume"
 	"github.com/aws/amazon-ecs-agent/agent/utils/ttime"
+	"github.com/aws/amazon-ecs-agent/config/config"
 	"github.com/aws/aws-sdk-go/internal/protocol/json/jsonutil"
 	docker "github.com/fsouza/go-dockerclient"
 )
@@ -302,7 +303,7 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 		logOpts[keypair[0]] = keypair[1]
 	}
 
-	logConfig := &LogConfig{
+	logConfig := &docker.LogConfig{
 		Type:   logDriver,
 		Config: logOpts,
 	}
