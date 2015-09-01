@@ -306,7 +306,7 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 	keypair := make([]string, 20)
 	for _, kv := range strings.Fields(cfg.EngineLogOpts) {
 		keypair = strings.Split(kv, "=")
-		logOpts[strconv.Itoa(keypair[0])] = strconv.Itoa(keypair[1])
+		logOpts[keypair[0]] = keypair[1]
 	}
 
 	logConfig := &docker.LogConfig{
