@@ -32,7 +32,7 @@ const emptyHostVolumeName = "~internal~ecs-emptyvolume-source"
 var cfg *ecs_config.Config
 
 func init() {
-	cfg, _ = config.NewConfig()
+	cfg, _ = ecs_config.NewConfig()
 }
 
 // PostUnmarshalTask is run after a task has been unmarshalled, but before it has been
@@ -303,7 +303,7 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 
 	logDriver := cfg.EngineLogDriver
 	logOpts := make(map[string]string)
-	keypair := make(string)
+	keypair := ""
 	for _, kv := range strings.Fields(cfg.EngineLogOpts) {
 		keypair = strings.Split(kv, "=")
 		logOpts[keypair[0]] = keypair[1]
