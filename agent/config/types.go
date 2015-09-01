@@ -78,4 +78,12 @@ type Config struct {
 	// ReservedMemory specifies the amount of memory (in MB) to reserve for things
 	// other than containers managed by ECS
 	ReservedMemory uint16
+
+	// EngineLogDriver specifies the docker native logging driver
+	EngineLogDriver string
+
+	// EngineLogOpts specifies options needed by the docker logging driver.
+	// They should be specified by
+	// "fluentd-address=127.0.0.1:24224 some-option=blah"
+	EngineLogOpts string
 }
