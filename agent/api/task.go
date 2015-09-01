@@ -303,10 +303,10 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 
 	logDriver := cfg.EngineLogDriver
 	logOpts := make(map[string]string)
-	keypair := ""
+	keypair := make([]string)
 	for _, kv := range strings.Fields(cfg.EngineLogOpts) {
 		keypair = strings.Split(kv, "=")
-		logOpts[keypair[0]] = keypair[1]
+		logOpts[keypair[0](string)] = keypair[1](string)
 	}
 
 	logConfig := &docker.LogConfig{
