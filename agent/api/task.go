@@ -23,6 +23,7 @@ import (
 	"github.com/aws/amazon-ecs-agent/agent/engine/emptyvolume"
 	"github.com/aws/amazon-ecs-agent/agent/utils/ttime"
 	"github.com/aws/aws-sdk-go/internal/protocol/json/jsonutil"
+	docker "github.com/fsouza/go-dockerclient"
 )
 
 const emptyHostVolumeName = "~internal~ecs-emptyvolume-source"
