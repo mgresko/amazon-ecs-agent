@@ -20,7 +20,7 @@ import (
 	"strings"
 
 	"github.com/aws/amazon-ecs-agent/agent/acs/model/ecsacs"
-	"github.com/aws/amazon-ecs-agent/agent/config"
+	ecs_config "github.com/aws/amazon-ecs-agent/agent/config"
 	"github.com/aws/amazon-ecs-agent/agent/engine/emptyvolume"
 	"github.com/aws/amazon-ecs-agent/agent/utils/ttime"
 	"github.com/aws/aws-sdk-go/internal/protocol/json/jsonutil"
@@ -28,6 +28,12 @@ import (
 )
 
 const emptyHostVolumeName = "~internal~ecs-emptyvolume-source"
+
+var cfg *ecs_config.Config
+
+func init() {
+	cfg, _ = config.NewConfig()
+}
 
 // PostUnmarshalTask is run after a task has been unmarshalled, but before it has been
 // run. It is possible it will be subsequently called after that and should be
@@ -295,10 +301,10 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 		return nil, &HostConfigError{err.Error()}
 	}
 
-	logDriver := config.EngineLogDriver
+	logDriver := cfg.EngineLogDriver
 	logOpts := make(map[string]string)
 	keypair := make(string)
-	for _, kv := range strings.Fields(config.EngineLogOpts) {
+	for _, kv := range strings.Fields(cfg.EngineLogOpts) {
 		keypair = strings.Split(kv, "=")
 		logOpts[keypair[0]] = keypair[1]
 	}
