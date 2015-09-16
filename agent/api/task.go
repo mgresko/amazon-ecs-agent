@@ -309,9 +309,13 @@ func (task *Task) dockerHostConfig(container *Container, dockerContainerMap map[
 		logOpts[keypair[0]] = keypair[1]
 	}
 
-	logConfig := &docker.LogConfig{
-		Type:   logDriver,
-		Config: logOpts,
+	if len(logDriver) > 0 {
+		logConfig := &docker.LogConfig{
+			Type:   logDriver,
+			Config: logOpts,
+		}
+	} else {
+		logConfig := &docker.LogConfig{}
 	}
 
 	hostConfig := &docker.HostConfig{
